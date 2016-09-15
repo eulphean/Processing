@@ -50,6 +50,7 @@ int currentShapeIdx = 0;
 void setup() {
   background(#D6FFFE);
   size(800, 800, P3D);
+  frameRate(1);
 }
 
 void draw() {
@@ -61,38 +62,41 @@ void draw() {
   //print ("current shape is" + currentShape);
   // only draw the ellipse if start is true
   if (start) {
-    
      // rotating the shape?
+     float x = mouseX;
+     float y = mouseY;
      if (rotate) {
-       // save the coordinate system
-       pushMatrix();
-       // new origin is at mouseX, mouseY
-       translate(mouseX, mouseY);
-       rotate(radians(45));
+        pushMatrix();
+        translate(mouseX, mouseY);
+        rotate(radians(45));
+        x = 0;
+        y = 0;
      }
      
      if (scale) {
        pushMatrix();
        translate(mouseX, mouseY);
        scale(2.0);
+       x = 0;
+       y = 0;
      }  
        
      // Draw the shape
      switch (currentShape) {
        case ellipse:
-         ellipse(mouseX, mouseY, 80, 80);
+         ellipse(x, y, 80, 80);
          break;
          
        case square:
-         rect(mouseX, mouseY, 80, 80);
+         rect(x, y, 80, 80);
          break;
          
        case rectangle:
-         rect(mouseX, mouseY, 40, 80);
+         rect(x, y, 40, 80);
          break;
         
        case line:
-         line(mouseX, mouseY, mouseX + 40, mouseY);
+         line(x, y, x + 40, y);
          break;
          
        default:     
