@@ -39,8 +39,10 @@ color fillVal = #6BFFCB;
 float alpha = 100;
 boolean start = false;
 float stroke = 1;
-boolean rotate = false;
+int rotate = -1;
+int MAX_ROTATE = 4;
 boolean scale = false;
+float scaleRate = 1.0;
 int numOfShapes = 4;
 Shape [] shapes = { Shape.ellipse, Shape.square, Shape.rectangle, Shape.line };
 // index of the current shape
@@ -50,7 +52,7 @@ int currentShapeIdx = 0;
 void setup() {
   background(#D6FFFE);
   size(800, 800, P3D);
-  frameRate(1);
+  frameRate(15);
 }
 
 void draw() {
@@ -65,22 +67,22 @@ void draw() {
      // rotating the shape?
      float x = mouseX;
      float y = mouseY;
-     if (rotate) {
+     if (rotate != -1 || scale) {
         pushMatrix();
         translate(mouseX, mouseY);
-        rotate(radians(45));
+        if (rotate != -1) {
+          rotate(PI/4 * rotate);
+        } if (scale) {
+          if (scaleRate < 1.0) {
+            scaleRate = 1.0;
+          }
+          scale(scaleRate);
+          
+        }
         x = 0;
         y = 0;
      }
-     
-     if (scale) {
-       pushMatrix();
-       translate(mouseX, mouseY);
-       scale(2.0);
-       x = 0;
-       y = 0;
-     }  
-       
+   
      // Draw the shape
      switch (currentShape) {
        case ellipse:
@@ -103,7 +105,7 @@ void draw() {
          break;
      }
      
-     if (rotate || scale) {
+     if (rotate != -1 || scale) {
        popMatrix(); 
      }
   }
@@ -116,11 +118,19 @@ void keyPressed() {
  if (key == CODED) {
      switch (keyCode){
        case UP: 
-         alpha+=10;
+         if (scale) {
+           scaleRate+=1.0;
+         } else {
+           alpha+=10;
+         }
          break;
        
        case DOWN:
-         alpha-=10;
+         if (scale) {
+           scaleRate-=1.0;
+         } else {
+           alpha-=10;
+         }
          break;
        
        case LEFT:
@@ -185,11 +195,22 @@ void keyPressed() {
      setNextShape();
      break;
      
+    case ENTER: 
+      background(#D6FFFE);
+      break;
+     
    case 'r':
-     rotate = !rotate;
+     if (rotate == -1) {
+       rotate = 1;
+     } else if (rotate > MAX_ROTATE) {
+       rotate = -1;
+     } else {
+       rotate = rotate + 1;
+     }
      break;
    
    case 's':
+     //scaleRate = 1.0;
      scale = !scale;
      break;
    
@@ -199,9 +220,9 @@ void keyPressed() {
  } 
 }
 
-void mousePressed() {
+/*void mousePressed() {
   background(#D6FFFE);
-}
+}*/
 
 // Helper Method to set the next shape
 void setNextShape(){
