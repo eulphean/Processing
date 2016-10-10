@@ -2,25 +2,30 @@
   Author: Amay Kataria
   Description: This is called, "Luka", an interactive abstract art generator.
   
-  Features: 
-  a) 1 - 9: Colors 
-  b) Tab: Shapes
-  c) Arrow Up (Alpha up), Arrow Down (Alpha down)
-  d) Arrow Left (stroke down), Arrow Right (stroke up)
-  e) Space: To begin
-  f) Mouse left click: Clear canvas
-  g) Scale: s
-  h) Rotate: r
+  Steps for the player
+
+  TAB - Change shapes (cycle between ellipse, square, rectangle, line) 
+
+  1-9, Change colors - 
+   case '1': red
+   case '2': purple shade
+   case '3':  light purple
+   case '4': navy blue
+   case '5': sea blue
+   case '6': sky blue
+   case '7':  grass green
+   case '8': tint green
+   case '9': yellow
+
+  Spacebar - Pause
+  R - rotate
+  S - scale (2.0)
   
-  Needed features:
-  - rotate these shapes (only in click mode)
-  - Use a PShape to store the rectangle after 
-  - scale these shapes (only in click mode) 
-  - implement mouse modes
-    - Click mode
-    - Hover mode 
-  - have a preview of the shape i just chose in a small window
-  ** ability to undo these shapes ** golden feature
+  up/down arrow - alpha fill up/down
+  
+  left/right arrow - stroke fill up/down
+  
+  left click - clear screen
 */
 
 enum Shape {
